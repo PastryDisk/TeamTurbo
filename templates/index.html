@@ -6,8 +6,9 @@
 
         <!-- Audio File Form -->
         <form id="audio_file">
-            <label>Enter a File Name</label>
-            <input id="text_input" type="text" value="" placeholder="File Name">
+            <input id="file_upload" type="file" placeholder="Upload File">
+            <br>
+            <br>
             <button id="submitBtn">Submit</button>
         </form>
 
@@ -17,12 +18,16 @@
                 // Do not submit normally
                 e.preventDefault();
 
+                let formData = new FormData();
+                formData.append("file", $("#file_upload")[0].files[0])
+
                 // Handle submission
                 $.ajax({
                     url: '/upload_file',
                     type: "POST",
-                    data: $("#text_input").val(),
-                    dataType: 'text',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
                     success: (response) => {
                         alert(response)
                     },
